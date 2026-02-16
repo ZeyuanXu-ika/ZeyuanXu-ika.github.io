@@ -1,0 +1,21 @@
+---
+layout: archive
+title: "My Friends"
+permalink: /friends/
+author_profile: true
+---
+
+{% include base_path %}
+
+{% if site.friends and site.friends.size > 0 %}
+  {% for post in site.friends %}
+    <h2>{{ post.title }}</h2>
+    {% if post.homepage %}
+      <p><a href="{{ post.homepage }}" target="_blank" rel="noopener">{{ post.homepage }}</a></p>
+    {% endif %}
+    {{ post.content | markdownify }}
+    <hr />
+  {% endfor %}
+{% else %}
+  <p>No friends listed yet. Add markdown files under <code>_friends/</code>.</p>
+{% endif %}

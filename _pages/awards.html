@@ -1,0 +1,16 @@
+---
+layout: single
+title: "Awards and Honors"
+permalink: /awards/
+author_profile: true
+---
+
+{% assign awards_sorted = site.awards | sort: "date" | reverse %}
+
+{% for post in awards_sorted %}
+<h2>{{ post.title }}</h2>
+<div>
+  {{ post.content | markdownify }}
+</div>
+<hr>
+{% endfor %}

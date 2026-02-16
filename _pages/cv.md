@@ -1,64 +1,92 @@
 ---
-layout: archive
+layout: single
 title: "CV"
 permalink: /cv/
 author_profile: true
 redirect_from:
   - /resume
 ---
+Last Update: 2026.2.17
 
-{% include base_path %}
+<style>
+.cv-btn {
+  padding: 0.2rem 0.9rem;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #3d3d3d;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.35;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+.cv-btn:hover {
+  opacity: 1;
+}
+.cv-btn.is-active {
+  opacity: 1;
+  background: #ffffff;
+}
+#cv-frame {
+  display: block;
+  border: 0;
+  opacity: 1;
+  transition: opacity 0.24s ease;
+}
+</style>
 
-Education
-======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+<div id="cv-switcher" style="margin: 0 0 1rem 0; display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+  <button id="btn-toggle" class="cv-btn is-active" type="button">Current: EN | Switch to CN</button>
+  <a id="btn-download" class="cv-btn" href="/files/cv-en.pdf" download>Download CV (PDF)</a>
+  <a id="btn-open" class="cv-btn" href="/files/cv-en.pdf" target="_blank" rel="noopener">Open in new tab</a>
+</div>
 
-Work experience
-======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+<div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+  <iframe
+    id="cv-frame"
+    src="/files/cv-en.pdf"
+    title="CV Viewer"
+    width="100%"
+    height="980"
+  ></iframe>
+</div>
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+<script>
+(function () {
+  const zhPdf = '/files/cv-zh.pdf';
+  const enPdf = '/files/cv-en.pdf';
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+  const frame = document.getElementById('cv-frame');
+  const btnToggle = document.getElementById('btn-toggle');
+  const btnDownload = document.getElementById('btn-download');
+  const btnOpen = document.getElementById('btn-open');
 
-Publications
-======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+  let isZh = false;
+
+  function updateUi() {
+    const pdf = isZh ? zhPdf : enPdf;
+    btnToggle.textContent = isZh ? 'Cn Ver' : 'En Ver';
+    btnDownload.href = pdf;
+    btnOpen.href = pdf;
+  }
+
+  function switchCv() {
+    isZh = !isZh;
+    const pdf = isZh ? zhPdf : enPdf;
+
+    frame.style.opacity = '0.15';
+    window.setTimeout(function () {
+      frame.src = pdf;
+      updateUi();
+      frame.style.opacity = '1';
+    }, 160);
+  }
+
+  btnToggle.addEventListener('click', switchCv);
+  updateUi();
+})();
+</script>
